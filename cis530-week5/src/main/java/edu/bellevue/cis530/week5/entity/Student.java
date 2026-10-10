@@ -1,4 +1,4 @@
-package edu.bellevue.cis530.week5.model;
+package edu.bellevue.cis530.week5.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

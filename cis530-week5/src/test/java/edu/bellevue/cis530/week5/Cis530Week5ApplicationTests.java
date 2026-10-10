@@ -20,7 +20,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-@SpringBootTest
+@SpringBootTest(properties = {
+		"spring.datasource.url=jdbc:h2:mem:cis530_week5_test;DB_CLOSE_DELAY=-1",
+		"spring.datasource.username=sa",
+		"spring.datasource.password="
+})
 class Cis530Week5ApplicationTests {
 
 	@Autowired

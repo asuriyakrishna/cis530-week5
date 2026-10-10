@@ -10,16 +10,15 @@ Requires Java 25 or later. The project includes the Maven wrapper:
 .\mvnw.cmd spring-boot:run
 ```
 
-By default the application uses an in-memory H2 database. To use MySQL instead, set `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD` before starting; for example:
+By default the application connects to the MySQL `cis530_week5` schema on `localhost:3306`. Create the schema first and set `DB_USERNAME` and `DB_PASSWORD` to match your MySQL account. To connect to a different MySQL server or schema, set `DB_URL` as well:
 
 ```powershell
-$env:DB_URL = "jdbc:mysql://localhost:3306/cis530_week5"
 $env:DB_USERNAME = "root"
 $env:DB_PASSWORD = "your-password"
 .\mvnw.cmd spring-boot:run
 ```
 
-The H2 console is available at `http://localhost:8080/h2-console` when using the default H2 database. Use JDBC URL `jdbc:h2:mem:cis530_week5`, user `sa`, and a blank password.
+Tests use an isolated in-memory H2 database. To run the application against H2 manually, set `DB_URL` to `jdbc:h2:mem:cis530_week5;DB_CLOSE_DELAY=-1`, set `DB_USERNAME=sa` and `DB_PASSWORD` to an empty string, and enable the console with `H2_CONSOLE_ENABLED=true`. The H2 console is at `http://localhost:8080/h2-console`.
 
 ## API
 

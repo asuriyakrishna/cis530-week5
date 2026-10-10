@@ -1,6 +1,5 @@
 package edu.bellevue.cis530.week5.exception;
 
-import edu.bellevue.cis530.week5.service.StudentNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -17,9 +16,9 @@ import java.util.TreeMap;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(StudentNotFoundException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handleNotFound(
-            StudentNotFoundException exception, HttpServletRequest request) {
+            ResourceNotFoundException exception, HttpServletRequest request) {
         return createResponse(HttpStatus.NOT_FOUND, exception.getMessage(), request, Map.of());
     }
 

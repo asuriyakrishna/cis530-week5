@@ -1,7 +1,5 @@
 package edu.bellevue.cis530.week5.controller;
 
-import edu.bellevue.cis530.week5.dto.StudentRequest;
-import edu.bellevue.cis530.week5.dto.StudentResponse;
 import edu.bellevue.cis530.week5.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

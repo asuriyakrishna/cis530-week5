@@ -1,90 +1,19 @@
 package edu.bellevue.cis530.week5.service;
 
-import edu.bellevue.cis530.week5.dto.StudentProfileRequest;
-import edu.bellevue.cis530.week5.dto.StudentRequest;
-import edu.bellevue.cis530.week5.dto.StudentResponse;
-import edu.bellevue.cis530.week5.model.Student;
-import edu.bellevue.cis530.week5.model.StudentProfile;
-import edu.bellevue.cis530.week5.repository.StudentRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import edu.bellevue.cis530.week5.controller.StudentRequest;
+import edu.bellevue.cis530.week5.controller.StudentResponse;
 
 import java.util.List;
 
-@Service
-@Transactional
-public class StudentService {
+public interface StudentService {
 
-    private final StudentRepository studentRepository;
+    StudentResponse create(StudentRequest request);
 
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
+    List<StudentResponse> findAll();
 
-    public StudentResponse create(StudentRequest request) {
-        Student student = new Student();
-        applyRequest(student, request);
-        return toResponse(studentRepository.save(student));
-    }
+    StudentResponse findById(Long id);
 
-    @Transactional(readOnly = true)
-    public List<StudentResponse> findAll() {
-        return studentRepository.findAll().stream()
-                .map(StudentService::toResponse)
-                .toList();
-    }
+    StudentResponse update(Long id, StudentRequest request);
 
-    @Transactional(readOnly = true)
-    public StudentResponse findById(Long id) {
-        return toResponse(findStudent(id));
-    }
-
-    public StudentResponse update(Long id, StudentRequest request) {
-        Student student = findStudent(id);
-        applyRequest(student, request);
-        return toResponse(studentRepository.save(student));
-    }
-
-    public void delete(Long id) {
-        studentRepository.delete(findStudent(id));
-    }
-
-    private Student findStudent(Long id) {
-        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
-    }
-
-    private static void applyRequest(Student student, StudentRequest request) {
-        student.setFirstName(request.getFirstName());
-        student.setLastName(request.getLastName());
-        student.setEmail(request.getEmail());
-
-        StudentProfile profile = student.getProfile();
-        if (profile == null) {
-            profile = new StudentProfile();
-            student.setProfile(profile);
-        }
-        applyProfileRequest(profile, request.getProfile());
-    }
-
-    private static void applyProfileRequest(StudentProfile profile, StudentProfileRequest request) {
-        profile.setPhoneNumber(request.getPhoneNumber());
-        profile.setAddress(request.getAddress());
-        profile.setMajor(request.getMajor());
-        profile.setDateOfBirth(request.getDateOfBirth());
-    }
-
-    private static StudentResponse toResponse(Student student) {
-        StudentProfile profile = student.getProfile();
-        return new StudentResponse(
-                student.getId(),
-                student.getFirstName(),
-                student.getLastName(),
-                student.getEmail(),
-                new StudentResponse.Profile(
-                        profile.getId(),
-                        profile.getPhoneNumber(),
-                        profile.getAddress(),
-                        profile.getMajor(),
-                        profile.getDateOfBirth()));
-    }
+    void delete(Long id);
 }

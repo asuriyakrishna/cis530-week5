@@ -1,4 +1,4 @@
-package edu.bellevue.cis530.week5.dto;
+package edu.bellevue.cis530.week5.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
