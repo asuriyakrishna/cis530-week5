@@ -1,30 +1,40 @@
 package edu.bellevue.cis530.week5.controller;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Past;
-
-import java.time.LocalDate;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public class StudentProfileRequest {
 
     @NotBlank
-    private String phoneNumber;
+    private String phone;
 
     @NotBlank
     private String address;
 
     @NotBlank
-    private String major;
+    private String city;
 
-    @Past
-    private LocalDate dateOfBirth;
+    @NotBlank
+    @Size(min = 2, max = 2)
+    private String state;
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    @NotBlank
+    @Pattern(regexp = "\\d{5}")
+    private String zip;
+
+    @NotBlank
+    private String emergencyContactName;
+
+    @NotBlank
+    private String emergencyContactPhone;
+
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getAddress() {
@@ -35,19 +45,43 @@ public class StudentProfileRequest {
         this.address = address;
     }
 
-    public String getMajor() {
-        return major;
+    public String getCity() {
+        return city;
     }
 
-    public void setMajor(String major) {
-        this.major = major;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    public String getState() {
+        return state;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getEmergencyContactName() {
+        return emergencyContactName;
+    }
+
+    public void setEmergencyContactName(String emergencyContactName) {
+        this.emergencyContactName = emergencyContactName;
+    }
+
+    public String getEmergencyContactPhone() {
+        return emergencyContactPhone;
+    }
+
+    public void setEmergencyContactPhone(String emergencyContactPhone) {
+        this.emergencyContactPhone = emergencyContactPhone;
     }
 }

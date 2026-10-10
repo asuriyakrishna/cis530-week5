@@ -37,16 +37,22 @@ Create and update accept a required nested profile:
   "firstName": "Taylor",
   "lastName": "Morgan",
   "email": "taylor.morgan@example.edu",
+  "major": "Computer Science",
+  "gpa": 3.75,
+  "enrollmentYear": 2025,
   "profile": {
-    "phoneNumber": "555-0100",
+    "phone": "555-0100",
     "address": "1 Campus Way",
-    "major": "Computer Science",
-    "dateOfBirth": "2003-06-15"
+    "city": "Omaha",
+    "state": "NE",
+    "zip": "68123",
+    "emergencyContactName": "Morgan Taylor",
+    "emergencyContactPhone": "555-0101"
   }
 }
 ```
 
-Names, email, phone number, address, and major are required; email must be valid, and a supplied birth date must be in the past. Validation errors return `400` JSON with per-field details. A missing student returns `404`; conflicts such as a duplicate email return `409`. Responses use DTOs so the bidirectional entity association is never serialized recursively.
+The `students` table maps first name, last name, email, major, GPA, enrollment year, and profile foreign key to the assignment's required column names. The `student_profiles` table stores phone, address, city, two-character state, five-digit ZIP code, and emergency contact details. Names, email, major, GPA, enrollment year, and all profile fields are validated; email must be valid and GPA must be between 0.00 and 4.00. Validation errors return `400` JSON with per-field details. A missing student returns `404`; conflicts such as a duplicate email return `409`. Responses use DTOs so the bidirectional entity association is never serialized recursively.
 
 Import [`postman/Student-Services.postman_collection.json`](postman/Student-Services.postman_collection.json) into Postman. Create a student first, then set the `studentId` collection variable to the ID in the response to try get, update, and delete.
 

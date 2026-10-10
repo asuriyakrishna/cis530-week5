@@ -64,6 +64,9 @@ public class StudentServiceImpl implements StudentService {
         student.setFirstName(request.getFirstName());
         student.setLastName(request.getLastName());
         student.setEmail(request.getEmail());
+        student.setMajor(request.getMajor());
+        student.setGpa(request.getGpa());
+        student.setEnrollmentYear(request.getEnrollmentYear());
 
         StudentProfile profile = student.getProfile();
         if (profile == null) {
@@ -74,10 +77,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private static void applyProfileRequest(StudentProfile profile, StudentProfileRequest request) {
-        profile.setPhoneNumber(request.getPhoneNumber());
+        profile.setPhone(request.getPhone());
         profile.setAddress(request.getAddress());
-        profile.setMajor(request.getMajor());
-        profile.setDateOfBirth(request.getDateOfBirth());
+        profile.setCity(request.getCity());
+        profile.setState(request.getState());
+        profile.setZip(request.getZip());
+        profile.setEmergencyContactName(request.getEmergencyContactName());
+        profile.setEmergencyContactPhone(request.getEmergencyContactPhone());
     }
 
     private static StudentResponse toResponse(Student student) {
@@ -87,11 +93,17 @@ public class StudentServiceImpl implements StudentService {
                 student.getFirstName(),
                 student.getLastName(),
                 student.getEmail(),
+                student.getMajor(),
+                student.getGpa(),
+                student.getEnrollmentYear(),
                 new StudentResponse.Profile(
                         profile.getId(),
-                        profile.getPhoneNumber(),
+                        profile.getPhone(),
                         profile.getAddress(),
-                        profile.getMajor(),
-                        profile.getDateOfBirth()));
+                        profile.getCity(),
+                        profile.getState(),
+                        profile.getZip(),
+                        profile.getEmergencyContactName(),
+                        profile.getEmergencyContactPhone()));
     }
 }

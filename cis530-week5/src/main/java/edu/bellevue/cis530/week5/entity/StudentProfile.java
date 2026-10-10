@@ -8,9 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Past;
-
-import java.time.LocalDate;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "student_profiles")
@@ -21,19 +20,34 @@ public class StudentProfile {
     private Long id;
 
     @NotBlank
-    @Column(nullable = false)
-    private String phoneNumber;
+    @Column(name = "phone", nullable = false)
+    private String phone;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(name = "address", nullable = false)
     private String address;
 
     @NotBlank
-    @Column(nullable = false)
-    private String major;
+    @Column(name = "city", nullable = false)
+    private String city;
 
-    @Past
-    private LocalDate dateOfBirth;
+    @NotBlank
+    @Size(min = 2, max = 2)
+    @Column(name = "state", nullable = false, length = 2)
+    private String state;
+
+    @NotBlank
+    @Pattern(regexp = "\\d{5}")
+    @Column(name = "zip", nullable = false, length = 5)
+    private String zip;
+
+    @NotBlank
+    @Column(name = "emergency_contact_name", nullable = false)
+    private String emergencyContactName;
+
+    @NotBlank
+    @Column(name = "emergency_contact_phone", nullable = false)
+    private String emergencyContactPhone;
 
     @OneToOne(mappedBy = "profile")
     private Student student;
@@ -49,12 +63,12 @@ public class StudentProfile {
         this.id = id;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getAddress() {
@@ -65,20 +79,44 @@ public class StudentProfile {
         this.address = address;
     }
 
-    public String getMajor() {
-        return major;
+    public String getCity() {
+        return city;
     }
 
-    public void setMajor(String major) {
-        this.major = major;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    public String getState() {
+        return state;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getEmergencyContactName() {
+        return emergencyContactName;
+    }
+
+    public void setEmergencyContactName(String emergencyContactName) {
+        this.emergencyContactName = emergencyContactName;
+    }
+
+    public String getEmergencyContactPhone() {
+        return emergencyContactPhone;
+    }
+
+    public void setEmergencyContactPhone(String emergencyContactPhone) {
+        this.emergencyContactPhone = emergencyContactPhone;
     }
 
     public Student getStudent() {

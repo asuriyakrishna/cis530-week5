@@ -22,7 +22,7 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"firstName\": \"Taylor\",\n  \"lastName\": \"Morgan\",\n  \"email\": \"taylor.morgan@example.edu\",\n  \"profile\": {\n    \"phoneNumber\": \"555-0100\",\n    \"address\": \"1 Campus Way\",\n    \"major\": \"Computer Science\",\n    \"dateOfBirth\": \"2003-06-15\"\n  }\n}"
+          "raw": "{\n  \"firstName\": \"Taylor\",\n  \"lastName\": \"Morgan\",\n  \"email\": \"taylor.morgan@example.edu\",\n  \"major\": \"Computer Science\",\n  \"gpa\": 3.75,\n  \"enrollmentYear\": 2025,\n  \"profile\": {\n    \"phone\": \"555-0100\",\n    \"address\": \"1 Campus Way\",\n    \"city\": \"Omaha\",\n    \"state\": \"NE\",\n    \"zip\": \"68123\",\n    \"emergencyContactName\": \"Morgan Taylor\",\n    \"emergencyContactPhone\": \"555-0101\"\n  }\n}"
         },
         "url": {
           "raw": "{{baseUrl}}/api/students",
@@ -60,7 +60,7 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"firstName\": \"Taylor\",\n  \"lastName\": \"Morgan\",\n  \"email\": \"taylor.morgan@example.edu\",\n  \"profile\": {\n    \"phoneNumber\": \"555-0101\",\n    \"address\": \"2 Updated Campus Way\",\n    \"major\": \"Mathematics\",\n    \"dateOfBirth\": \"2003-06-15\"\n  }\n}"
+          "raw": "{\n  \"firstName\": \"Taylor\",\n  \"lastName\": \"Morgan\",\n  \"email\": \"taylor.morgan@example.edu\",\n  \"major\": \"Mathematics\",\n  \"gpa\": 3.75,\n  \"enrollmentYear\": 2025,\n  \"profile\": {\n    \"phone\": \"555-0101\",\n    \"address\": \"2 Updated Campus Way\",\n    \"city\": \"Omaha\",\n    \"state\": \"NE\",\n    \"zip\": \"68123\",\n    \"emergencyContactName\": \"Morgan Taylor\",\n    \"emergencyContactPhone\": \"555-0101\"\n  }\n}"
         },
         "url": {
           "raw": "{{baseUrl}}/api/students/{{studentId}}",
@@ -76,7 +76,7 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"firstName\": \"\",\n  \"lastName\": \"Morgan\",\n  \"email\": \"not-an-email\",\n  \"profile\": {\n    \"phoneNumber\": \"\",\n    \"address\": \"1 Campus Way\",\n    \"major\": \"Biology\",\n    \"dateOfBirth\": \"2999-01-01\"\n  }\n}"
+          "raw": "{\n  \"firstName\": \"\",\n  \"lastName\": \"Morgan\",\n  \"email\": \"not-an-email\",\n  \"major\": \"\",\n  \"gpa\": 5.25,\n  \"enrollmentYear\": 2025,\n  \"profile\": {\n    \"phone\": \"\",\n    \"address\": \"1 Campus Way\",\n    \"city\": \"Omaha\",\n    \"state\": \"Nebraska\",\n    \"zip\": \"123456\",\n    \"emergencyContactName\": \"Morgan Taylor\",\n    \"emergencyContactPhone\": \"555-0101\"\n  }\n}"
         },
         "url": {
           "raw": "{{baseUrl}}/api/students",
