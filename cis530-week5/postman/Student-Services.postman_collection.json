@@ -1,0 +1,100 @@
+{
+  "info": {
+    "name": "University Student Services",
+    "description": "CRUD and validation requests for the Student Services API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "studentId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Create student with profile",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Taylor\",\n  \"lastName\": \"Morgan\",\n  \"email\": \"taylor.morgan@example.edu\",\n  \"profile\": {\n    \"phoneNumber\": \"555-0100\",\n    \"address\": \"1 Campus Way\",\n    \"major\": \"Computer Science\",\n    \"dateOfBirth\": \"2003-06-15\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/students",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "students"]
+        }
+      }
+    },
+    {
+      "name": "List students",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/students",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "students"]
+        }
+      }
+    },
+    {
+      "name": "Get student",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/students/{{studentId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "students", "{{studentId}}"]
+        }
+      }
+    },
+    {
+      "name": "Update student and profile",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Taylor\",\n  \"lastName\": \"Morgan\",\n  \"email\": \"taylor.morgan@example.edu\",\n  \"profile\": {\n    \"phoneNumber\": \"555-0101\",\n    \"address\": \"2 Updated Campus Way\",\n    \"major\": \"Mathematics\",\n    \"dateOfBirth\": \"2003-06-15\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/students/{{studentId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "students", "{{studentId}}"]
+        }
+      }
+    },
+    {
+      "name": "Validation error example",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"\",\n  \"lastName\": \"Morgan\",\n  \"email\": \"not-an-email\",\n  \"profile\": {\n    \"phoneNumber\": \"\",\n    \"address\": \"1 Campus Way\",\n    \"major\": \"Biology\",\n    \"dateOfBirth\": \"2999-01-01\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/students",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "students"]
+        }
+      }
+    },
+    {
+      "name": "Delete student",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/api/students/{{studentId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "students", "{{studentId}}"]
+        }
+      }
+    }
+  ]
+}
