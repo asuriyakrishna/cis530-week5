@@ -54,6 +54,39 @@
       }
     },
     {
+      "name": "Get student profile",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/students/{{studentId}}/profile",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "students", "{{studentId}}", "profile"]
+        }
+      }
+    },
+    {
+      "name": "Find students by major",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/students/major/Computer%20Science",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "students", "major", "Computer%20Science"]
+        }
+      }
+    },
+    {
+      "name": "Find students by enrollment year",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/students/year/2025",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "students", "year", "2025"]
+        }
+      }
+    },
+    {
       "name": "Update student and profile",
       "request": {
         "method": "PUT",
@@ -77,6 +110,22 @@
         "body": {
           "mode": "raw",
           "raw": "{\n  \"firstName\": \"\",\n  \"lastName\": \"Morgan\",\n  \"email\": \"not-an-email\",\n  \"major\": \"\",\n  \"gpa\": 5.25,\n  \"enrollmentYear\": 2025,\n  \"profile\": {\n    \"phone\": \"\",\n    \"address\": \"1 Campus Way\",\n    \"city\": \"Omaha\",\n    \"state\": \"Nebraska\",\n    \"zip\": \"123456\",\n    \"emergencyContactName\": \"Morgan Taylor\",\n    \"emergencyContactPhone\": \"555-0101\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/students",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "students"]
+        }
+      }
+    },
+    {
+      "name": "Validation error example - field formats and ranges",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"T\",\n  \"lastName\": \"Morgan\",\n  \"email\": \"taylor.morgan@example.edu\",\n  \"major\": \"Computer Science\",\n  \"gpa\": 4.5,\n  \"enrollmentYear\": 2099,\n  \"profile\": {\n    \"phone\": \"not-a-phone\",\n    \"address\": \"1 Campus Way\",\n    \"city\": \"Omaha\",\n    \"state\": \"N\",\n    \"zip\": \"123456\",\n    \"emergencyContactName\": \"Morgan Taylor\",\n    \"emergencyContactPhone\": \"555-0101\"\n  }\n}"
         },
         "url": {
           "raw": "{{baseUrl}}/api/students",

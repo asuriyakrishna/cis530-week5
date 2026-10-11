@@ -70,6 +70,47 @@ class Cis530Week5ApplicationTests {
 	}
 
 	@Test
+	void returnsSpecificConflictWhenEmailAlreadyExists() throws Exception {
+		mockMvc.perform(post("/api/students")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(validStudent()))
+				.andExpect(status().isCreated());
+
+		mockMvc.perform(post("/api/students")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(validStudent()))
+				.andExpect(status().isConflict())
+				.andExpect(jsonPath("$.message")
+						.value("A student with email taylor.morgan@example.edu already exists"));
+	}
+
+	@Test
+	void findsStudentsByMajorAndYearAndFetchesProfile() throws Exception {
+		String response = mockMvc.perform(post("/api/students")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(validStudent()))
+				.andExpect(status().isCreated())
+				.andReturn()
+				.getResponse()
+				.getContentAsString();
+		String id = tools.jackson.databind.json.JsonMapper.builder().build()
+				.readTree(response).get("id").asText();
+
+		mockMvc.perform(get("/api/students/" + id + "/profile"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.phone").value("555-0100"))
+				.andExpect(jsonPath("$.student").doesNotExist());
+
+		mockMvc.perform(get(java.net.URI.create("/api/students/major/Computer%20Science")))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$[0].major").value("Computer Science"));
+
+		mockMvc.perform(get("/api/students/year/2025"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$[0].enrollmentYear").value(2025));
+	}
+
+	@Test
 	void createsTablesWithRequiredColumnNamesAndTypes() {
 		assertColumn("students", "id", "bigint", null, null);
 		assertColumn("students", "first_name", "character varying", null, null);
@@ -128,6 +169,30 @@ class Cis530Week5ApplicationTests {
 				.andExpect(jsonPath("$.validationErrors['profile.phone']").exists())
 				.andExpect(jsonPath("$.validationErrors['profile.state']").exists())
 				.andExpect(jsonPath("$.validationErrors['profile.zip']").exists());
+	}
+
+	@Test
+	void rejectsShortNamesInvalidPhoneAndFutureEnrollmentYearOnPut() throws Exception {
+		int nextYear = java.time.Year.now().getValue() + 1;
+		String invalidRequest = validStudent()
+				.replace("\"Taylor\"", "\"T\"")
+				.replace("\"lastName\": \"Morgan\"", "\"lastName\": \"" + "M".repeat(51) + "\"")
+				.replace("\"gpa\": 3.75", "\"gpa\": 4.5")
+				.replace("\"enrollmentYear\": 2025", "\"enrollmentYear\": " + nextYear)
+				.replace("\"phone\": \"555-0100\"", "\"phone\": \"not-a-phone\"")
+				.replace("\"state\": \"NE\"", "\"state\": \"N\"");
+
+		mockMvc.perform(put("/api/students/987654")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(invalidRequest))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.message").value("Request validation failed"))
+				.andExpect(jsonPath("$.validationErrors.firstName").exists())
+				.andExpect(jsonPath("$.validationErrors.lastName").exists())
+				.andExpect(jsonPath("$.validationErrors.gpa").exists())
+				.andExpect(jsonPath("$.validationErrors.enrollmentYear").exists())
+				.andExpect(jsonPath("$.validationErrors['profile.phone']").exists())
+				.andExpect(jsonPath("$.validationErrors['profile.state']").exists());
 	}
 
 	@Test

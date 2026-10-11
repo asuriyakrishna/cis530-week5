@@ -1,5 +1,6 @@
 package edu.bellevue.cis530.week5.controller;
 
+import edu.bellevue.cis530.week5.entity.Student;
 import edu.bellevue.cis530.week5.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -26,28 +27,43 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<StudentResponse> create(@Valid @RequestBody StudentRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(studentService.create(request));
+    public ResponseEntity<StudentResponse> create(@Valid @RequestBody Student student) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student));
     }
 
     @GetMapping
     public List<StudentResponse> findAll() {
-        return studentService.findAll();
+        return studentService.getAllStudents();
     }
 
     @GetMapping("/{id}")
     public StudentResponse findById(@PathVariable Long id) {
-        return studentService.findById(id);
+        return studentService.getStudentById(id);
     }
 
     @PutMapping("/{id}")
-    public StudentResponse update(@PathVariable Long id, @Valid @RequestBody StudentRequest request) {
-        return studentService.update(id, request);
+    public StudentResponse update(@PathVariable Long id, @Valid @RequestBody Student student) {
+        return studentService.updateStudent(id, student);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        studentService.delete(id);
+        studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/profile")
+    public StudentResponse.Profile getProfile(@PathVariable Long id) {
+        return studentService.getProfileByStudentId(id);
+    }
+
+    @GetMapping("/major/{major}")
+    public List<StudentResponse> getStudentsByMajor(@PathVariable String major) {
+        return studentService.getStudentsByMajor(major);
+    }
+
+    @GetMapping("/year/{year}")
+    public List<StudentResponse> getStudentsByEnrollmentYear(@PathVariable Integer year) {
+        return studentService.getStudentsByEnrollmentYear(year);
     }
 }

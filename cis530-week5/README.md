@@ -29,8 +29,11 @@ Tests use an isolated in-memory H2 database. To run the application against H2 m
 | `GET` | `/api/students/{id}` | Fetch a student (`404` if missing) |
 | `PUT` | `/api/students/{id}` | Update student and profile (`404` if missing) |
 | `DELETE` | `/api/students/{id}` | Delete student and cascading profile (`204`) |
+| `GET` | `/api/students/{id}/profile` | Fetch the student's profile |
+| `GET` | `/api/students/major/{major}` | Find students by major |
+| `GET` | `/api/students/year/{year}` | Find students by enrollment year |
 
-Create and update accept a required nested profile:
+Create and update accept a `Student` JSON object with the required profile nested in the same body. The controller validates the entity and cascades persistence to its profile:
 
 ```json
 {
@@ -52,7 +55,7 @@ Create and update accept a required nested profile:
 }
 ```
 
-The `students` table maps first name, last name, email, major, GPA, enrollment year, and profile foreign key to the assignment's required column names. The `student_profiles` table stores phone, address, city, two-character state, five-digit ZIP code, and emergency contact details. Names, email, major, GPA, enrollment year, and all profile fields are validated; email must be valid and GPA must be between 0.00 and 4.00. Validation errors return `400` JSON with per-field details. A missing student returns `404`; conflicts such as a duplicate email return `409`. Responses use DTOs so the bidirectional entity association is never serialized recursively.
+The `students` table maps first name, last name, email, major, GPA, enrollment year, and profile foreign key to the assignment's required column names. The `student_profiles` table stores phone, address, city, two-character state, five-digit ZIP code, and emergency contact details. Names must contain 2-50 characters, email must be valid, GPA must be between 0.0 and 4.0, and enrollment year must be from 2000 through the current calendar year. Profile phone numbers must contain 7-15 digits and use standard phone punctuation. Validation errors return `400` JSON with per-field names and messages. The Postman collection includes two invalid-request examples. Missing students return `404`; a duplicate email returns `409` with a specific message, while other database-constraint conflicts return a general `409`. Since MySQL data persists across restarts, use a new email address for each create request or update an existing student. Responses use DTOs so the bidirectional entity association is never serialized recursively.
 
 Import [`postman/Student-Services.postman_collection.json`](postman/Student-Services.postman_collection.json) into Postman. Create a student first, then set the `studentId` collection variable to the ID in the response to try get, update, and delete.
 

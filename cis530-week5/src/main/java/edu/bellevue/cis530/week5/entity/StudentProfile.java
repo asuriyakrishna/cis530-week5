@@ -20,6 +20,7 @@ public class StudentProfile {
     private Long id;
 
     @NotBlank
+    @Pattern(regexp = "^(?=(?:\\D*\\d){7,15}\\D*$)\\+?[0-9() .-]+$")
     @Column(name = "phone", nullable = false)
     private String phone;
 
@@ -46,6 +47,7 @@ public class StudentProfile {
     private String emergencyContactName;
 
     @NotBlank
+    @Pattern(regexp = "^(?=(?:\\D*\\d){7,15}\\D*$)\\+?[0-9() .-]+$")
     @Column(name = "emergency_contact_phone", nullable = false)
     private String emergencyContactPhone;
 

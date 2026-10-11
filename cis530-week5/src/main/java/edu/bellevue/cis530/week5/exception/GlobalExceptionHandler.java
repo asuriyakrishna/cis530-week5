@@ -22,6 +22,12 @@ public class GlobalExceptionHandler {
         return createResponse(HttpStatus.NOT_FOUND, exception.getMessage(), request, Map.of());
     }
 
+    @ExceptionHandler(DuplicateStudentEmailException.class)
+    public ResponseEntity<ApiError> handleDuplicateEmail(
+            DuplicateStudentEmailException exception, HttpServletRequest request) {
+        return createResponse(HttpStatus.CONFLICT, exception.getMessage(), request, Map.of());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> handleValidation(
             MethodArgumentNotValidException exception, HttpServletRequest request) {
@@ -43,7 +49,7 @@ public class GlobalExceptionHandler {
             DataIntegrityViolationException exception, HttpServletRequest request) {
         return createResponse(
                 HttpStatus.CONFLICT,
-                "The request conflicts with existing student data, such as a duplicate email address",
+                "The request violates a database constraint",
                 request,
                 Map.of());
     }

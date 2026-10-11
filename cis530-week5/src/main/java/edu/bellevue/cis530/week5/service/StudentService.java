@@ -1,19 +1,25 @@
 package edu.bellevue.cis530.week5.service;
 
-import edu.bellevue.cis530.week5.controller.StudentRequest;
+import edu.bellevue.cis530.week5.entity.Student;
 import edu.bellevue.cis530.week5.controller.StudentResponse;
 
 import java.util.List;
 
 public interface StudentService {
 
-    StudentResponse create(StudentRequest request);
+    StudentResponse createStudent(Student student);
 
-    List<StudentResponse> findAll();
+    List<StudentResponse> getAllStudents();
 
-    StudentResponse findById(Long id);
+    StudentResponse getStudentById(Long id);
 
-    StudentResponse update(Long id, StudentRequest request);
+    StudentResponse updateStudent(Long id, Student student);
 
-    void delete(Long id);
+    void deleteStudent(Long id);
+
+    StudentResponse.Profile getProfileByStudentId(Long id);
+
+    List<StudentResponse> getStudentsByMajor(String major);
+
+    List<StudentResponse> getStudentsByEnrollmentYear(Integer year);
 }

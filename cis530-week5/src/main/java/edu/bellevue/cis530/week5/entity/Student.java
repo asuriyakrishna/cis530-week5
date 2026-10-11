@@ -17,6 +17,7 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
@@ -29,10 +30,12 @@ public class Student {
     private Long id;
 
     @NotBlank
+    @Size(min = 2, max = 50)
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @NotBlank
+    @Size(min = 2, max = 50)
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
@@ -46,14 +49,15 @@ public class Student {
     private String major;
 
     @NotNull
-    @DecimalMin("0.00")
-    @DecimalMax("4.00")
+    @DecimalMin("0.0")
+    @DecimalMax("4.0")
     @Digits(integer = 1, fraction = 2)
     @Column(name = "gpa", nullable = false, precision = 3, scale = 2)
     private BigDecimal gpa;
 
     @NotNull
-    @Min(1900)
+    @Min(2000)
+    @CurrentYearOrEarlier
     @Column(name = "enrollment_year", nullable = false)
     private Integer enrollmentYear;
 
